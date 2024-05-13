@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import HomeCard from './HomeCard';
@@ -25,7 +25,6 @@ const MeetingTypeList = () => {
   const [meetingState, setMeetingState] = useState<
     'isScheduleMeeting' | 'isJoiningMeeting' | 'isInstantMeeting' | 'isHLSMeeting' | undefined
   >(undefined);
-  const [isProtocolHLS, setIsProtocolHLS] = useState(false);
   const [values, setValues] = useState(initialValues);
   const [callDetail, setCallDetail] = useState<Call>();
   const client = useStreamVideoClient();
