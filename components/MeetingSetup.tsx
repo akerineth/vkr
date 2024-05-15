@@ -45,6 +45,7 @@ const MeetingSetup = ({
     }
   }, [isMicCamToggled, call.camera, call.microphone]);
 
+  // HLS
   const [isProtocolHLS, setIsProtocolHLS] = useState(false);
   const { useLocalParticipant } = useCallStateHooks();
   const localParticipant = useLocalParticipant();
@@ -71,6 +72,26 @@ const MeetingSetup = ({
           revoke_permissions: [OwnCapability.UPDATE_CALL],
         });
   }
+  }
+  else {
+    if (localParticipant) {
+      call.updateUserPermissions({
+        user_id: localParticipant.userId,
+        grant_permissions: [OwnCapability.UPDATE_CALL],
+      });
+      call.update({
+        settings_override: {
+          broadcasting: {
+            // hls : {enabled : !Boolean((meetingState.localeCompare('HLS meeting')))}
+            hls : {enabled : false},
+          },
+        },
+      });
+      call.updateUserPermissions({
+        user_id: localParticipant.userId,
+        revoke_permissions: [OwnCapability.UPDATE_CALL],
+      });
+    }
   }
   }, [isProtocolHLS, call])
 
